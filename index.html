@@ -5,14 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         /* Estilos para la tabla */
+        
         table {
             width: 100%;
             border-collapse: collapse;
         }
         td {
-            border: 1px solid black;
+            border: none;
             padding: 2px;
         }
+
+        tr {
+            display: grid;
+            grid-template-columns: 30px repeat(10, 1fr);
+        }
+        
         button {
             width: 100%;
             height: 110px;
@@ -22,12 +29,51 @@
             border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s;
+            background-size: cover; /* Ajusta según sea necesario */
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            font-size: 24px;
+            font-style: bold;
+            font-family: "Arial", sans-serif;
+            text-shadow: 0 0 5px rgb(112, 218, 199);
+        }
+
+        button .text {
+            position: relative;
+            z-index: 2;
+        }
+
+        .palo-img-fondo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.2; /* Ajusta para transparencia */
+            z-index: 1;
         }
 
         button:hover{
             background-color: #45a049;
         }
+    
         
+
+        .palo-image img {
+            width: 30px;
+            height: auto;
+        }
+
+
+
         #resetButton {
                 width: 100%;
                 height: 50px;
@@ -70,17 +116,20 @@
             height: 10%; /* Altura fija de 100px */
         }
 
+        
+
         /* Estilos para adaptar el contenido al ancho de pantalla */
-        @media (max-width: 600px) {
+        @media (max-width: 760px) {
             table {
                 display: flex;
-                flex-basis: 100%;
                 width: 100%;
                 border-collapse: collapse;
             }
 
             thead, tbody, th, td, tr {
                 display: block;
+                width: 100%;
+                padding: 2px;
             }
 
             tr {
@@ -98,6 +147,12 @@
                 width: 100%;
                 height: calc(70vh / 10);
             }
+
+            .palo-image img {
+                width: auto;
+                height: 30px;
+            }
+            
         }
 
             </style>
@@ -165,46 +220,67 @@
                 };
 
                 // Crear un array con los palos de las cartas
-                const suits = ['Oros', 'Copas', 'Espadas', 'Bastos'];
+                const palos = ['Oros', 'Copas', 'Espadas', 'Bastos'];
 
                 // Crear un array con los valores de las cartas
-                const values = ['As', '2', '3', '4', '5', '6', '7', 'Sota', 'Caballo', 'Rey'];
+                const cartas = ['As', '2', '3', '4', '5', '6', '7', 'Sota', 'Caballo', 'Rey'];
 
                 // Obtener el elemento de la tabla
                 const table = document.getElementById('deckTable');
 
                 // Recorrer cada palo
-                for (let i = 0; i < suits.length; i++) {
+                for (let i = 0; i < palos.length; i++) {
                     // Crear una nueva fila para cada palo
                     const row = document.createElement('tr');
 
                     
 
                     row.classList.add('suit-row'); // Añadir clase para identificar la fila
-                    row.setAttribute('data-suit', suits[i]); // Añadir data-suit para identificar el palo
+                    row.setAttribute('data-suit', palos[i]); // Añadir data-suit para identificar el palo
 
                     // Crear una nueva celda para el nombre del palo
-                    const suitCell = document.createElement('td');
-                    suitCell.textContent = suits[i];
-                    row.appendChild(suitCell);
+                    const paloCell = document.createElement('td');
+                    paloCell.innerHTML = `<img src="imagenes/${palos[i]}.png" alt="${palos[i]}">`;
+                    paloCell.classList.add('palo-image'); // Add the class 'palo-image'
+                    row.appendChild(paloCell);
 
-                    // Recorrer cada valor
-                    for (let j = 0; j < values.length; j++) {
-                        // Crear una nueva celda para cada carta
-                        const cardCell = document.createElement('td');
-                        const button = document.createElement('button');
-                        button.textContent = values[j] + ' de ' + suits[i];
-                        button.value = getValue(values[j]);
-                        cardCell.setAttribute('data-label', suits[i]);
+                        // Recorrer cada valor
+                        for (let j = 0; j < cartas.length; j++) {
+                            // Crear una nueva celda para cada carta
+                            const cardCell = document.createElement('td');
+                            const button = document.createElement('button');
+                            const textSpan = document.createElement('span');
+                            textSpan.classList.add('text');
+                            let cardText = cartas[j];
+                            if (cardText === 'As' && palos[i] === 'Oros') {
+                                cardText = 'Oré';
+                            } else if (cardText === 'As' && palos[i] === 'Copas') {
+                                cardText = 'Copeta';
+                            } else if (cardText === 'As' && palos[i] === 'Bastos') {
+                                cardText = 'Bastillo';
+                            } else if (cardText === 'As' && palos[i] === 'Espadas') {
+                                cardText = 'Espadilla';
+                            }
+                            textSpan.innerHTML = cardText.toUpperCase() + '<span style="display: none;">de ' + palos[i] + '</span>';
+                            button.appendChild(textSpan);
 
-                        // Agregar el botón a la celda
-                        cardCell.appendChild(button);
-                        row.appendChild(cardCell);
+                        
+                            button.value = getValue(cartas[j]);
+                            cardCell.setAttribute('data-label', palos[i]);
+
+                            // Agregar el div para la imagen del palo
+                            const paloDiv = document.createElement('div');
+                            paloDiv.classList.add('palo-img-fondo');
+                            paloDiv.style.backgroundImage = `url('imagenes/${palos[i]}.png')`;
+                            button.appendChild(paloDiv);
+
+                            cardCell.appendChild(button);
+                            row.appendChild(cardCell);
+                        }
+
+                        // Agregar la fila a la tabla
+                        table.appendChild(row);
                     }
-
-                    // Agregar la fila a la tabla
-                    table.appendChild(row);
-                }
 
                 // Obtener los elementos para mostrar la suma y el contador de cartas pulsadas
                 const sumElement = document.getElementById('sum');
