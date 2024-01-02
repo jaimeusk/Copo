@@ -1,13 +1,16 @@
-# Calculadora de Probabilidades para El Juego "Coto"
+# Calculadora de Probabilidades para El Juego "Copo"
+
+## Acceso
+La calculadora está accesible a través de mi github pages. [https://jaimeusk.github.io/copo/](https://jaimeusk.github.io/copo/)
 
 ## Descripción
-Este proyecto es una calculadora interactiva de probabilidades de ganar para el juego de cartas "Coto". 
+Este proyecto es una calculadora interactiva de probabilidades de ganar para el juego de cartas "Copo". 
 Ayuda a los jugadores a calcular sus probabilidades de ganar en cada ronda del juego, basándose en las cartas que tienen en mano y las cartas que se revelan durante el juego.
 
 ## Características
 - Selección interactiva de cartas de una baraja española.
 - Calcula probabilidades de ganar y perder en tiempo real.
-- Diseño adaptable para diferentes tamaños de pantalla, incluyendo dispositivos móviles.
+- Diseño adaptable para diferentes tamaños de pantalla, incluyendo dispositivos móviles. (Principalmente pensado para usarse en móviles)
 - Reinicio rápido de cálculos y selecciones.
 
 ## Tecnologías Utilizadas
