@@ -1,7 +1,7 @@
 # Calculadora de Probabilidades para El Juego "Copo"
 
 ## Acceso
-La calculadora está accesible a través de mi github pages. [https://jaimeusk.github.io/copo/](https://jaimeusk.github.io/copo/)
+La calculadora está accesible a través de mi github pages. [https://jaimeusk.github.io/Copo/](https://jaimeusk.github.io/Copo/)
 
 ## Descripción
 Este proyecto es una calculadora interactiva de probabilidades de ganar para el juego de cartas "Copo". 
